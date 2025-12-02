@@ -91,6 +91,18 @@
             display: flex;
             justify-content: center;
         }
+        
+        /* EXERCISE 6.3: Validation error styles */
+        .error {
+            border-color: red !important;
+        }
+        
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -101,13 +113,17 @@
             <!-- Hidden ID field for updates -->
             <input type="hidden" th:field="*{id}" />
             
+            <!-- EXERCISE 6.3: Form fields with validation error display -->
             <div class="form-group">
                 <label for="productCode">Product Code *</label>
                 <input type="text" 
                        id="productCode" 
                        th:field="*{productCode}" 
-                       placeholder="Enter product code (e.g., P001)"
-                       required />
+                       th:errorclass="error"
+                       placeholder="Enter product code (e.g., P001)" />
+                <span th:if="${#fields.hasErrors('productCode')}" 
+                      th:errors="*{productCode}" 
+                      class="error-message">Product Code Error</span>
             </div>
             
             <div class="form-group">
@@ -115,8 +131,11 @@
                 <input type="text" 
                        id="name" 
                        th:field="*{name}" 
-                       placeholder="Enter product name"
-                       required />
+                       th:errorclass="error"
+                       placeholder="Enter product name" />
+                <span th:if="${#fields.hasErrors('name')}" 
+                      th:errors="*{name}" 
+                      class="error-message">Name Error</span>
             </div>
             
             <div class="form-group">
@@ -124,10 +143,13 @@
                 <input type="number" 
                        id="price" 
                        th:field="*{price}" 
+                       th:errorclass="error"
                        step="0.01" 
                        min="0"
-                       placeholder="0.00"
-                       required />
+                       placeholder="0.00" />
+                <span th:if="${#fields.hasErrors('price')}" 
+                      th:errors="*{price}" 
+                      class="error-message">Price Error</span>
             </div>
             
             <div class="form-group">
@@ -135,14 +157,19 @@
                 <input type="number" 
                        id="quantity" 
                        th:field="*{quantity}" 
+                       th:errorclass="error"
                        min="0"
-                       placeholder="0"
-                       required />
+                       placeholder="0" />
+                <span th:if="${#fields.hasErrors('quantity')}" 
+                      th:errors="*{quantity}" 
+                      class="error-message">Quantity Error</span>
             </div>
             
             <div class="form-group">
                 <label for="category">Category *</label>
-                <select id="category" th:field="*{category}" required>
+                <select id="category" 
+                        th:field="*{category}"
+                        th:errorclass="error">
                     <option value="">Select category</option>
                     <option value="Electronics">Electronics</option>
                     <option value="Furniture">Furniture</option>
@@ -151,6 +178,9 @@
                     <option value="Food">Food</option>
                     <option value="Other">Other</option>
                 </select>
+                <span th:if="${#fields.hasErrors('category')}" 
+                      th:errors="*{category}" 
+                      class="error-message">Category Error</span>
             </div>
             
             <div class="form-group">
